@@ -1,0 +1,36 @@
+# Network Packet Capture Analysis
+# Captured: 2025-10-23 14:32:11
+
+[Packet 1] 192.168.1.100:54321 -> 192.168.1.1:80 (HTTP GET)
+GET /login.php HTTP/1.1
+Host: internal-server.local
+User-Agent: Mozilla/5.0
+
+[Packet 2] 192.168.1.1:80 -> 192.168.1.100:54321 (HTTP 200)
+HTTP/1.1 200 OK
+Content-Type: text/html
+Set-Cookie: session=aGFja2VyMTIz
+
+[Packet 3] 192.168.1.100:54322 -> 10.0.0.5:443 (HTTPS)
+TLS Handshake - Encrypted payload
+
+[Packet 4] 192.168.1.100:54323 -> 203.0.113.42:8080 (Suspicious)
+POST /exfil HTTP/1.1
+Content-Type: application/octet-stream
+Content-Length: 256
+
+[HEX DUMP]:
+54 68 65 20 61 74 74 61 63 6b 65 72 20 75 73 65
+64 20 61 20 73 69 6d 70 6c 65 20 62 61 73 65 36
+34 20 65 6e 63 6f 64 69 6e 67 20 73 63 68 65 6d
+65 2e 20 43 68 65 63 6b 20 74 68 65 20 6d 65 6d
+6f 72 79 20 64 75 6d 70 20 66 6f 72 20 6d 6f 72
+65 20 63 6c 75 65 73 2e
+
+[Packet 5] 203.0.113.42:8080 -> 192.168.1.100:54323
+HTTP/1.1 200 OK
+Data received successfully
+
+# Analysis Note: The attacker used base64 encoding for initial reconnaissance.
+# Check memory dump for decoded credentials.
+# Image file may contain additional hidden data - try steganography tools.

@@ -34,3 +34,4 @@ Data received successfully
 # Analysis Note: The attacker used base64 encoding for initial reconnaissance.
 # Check memory dump for decoded credentials.
 # Image file may contain additional hidden data - try steganography tools.
+# Analyze pcap file 
